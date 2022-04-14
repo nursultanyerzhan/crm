@@ -1,39 +1,5 @@
 'use strict';
 
-const createRow = goodObject => {
-    const element = `
-  <tr>
-    <td class="table__cell ">${goodObject.id}</td>
-    <td class="table__cell table__cell_left table__cell_name" data-id="${goodObject.id}">
-        <span class="table__cell-id">id: ${goodObject.id}</span>${goodObject.title}</td>
-    <td class="table__cell table__cell_left">${goodObject.category}</td>
-    <td class="table__cell">${goodObject.units}</td>
-    <td class="table__cell">${goodObject.count}</td>
-    <td class="table__cell">${goodObject.price}</td>
-    <td class="table__cell">${goodObject.price * goodObject.count}</td>
-    <td class="table__cell table__cell_btn-wrapper">
-        <button class="table__btn table__btn_pic"></button>
-        <button class="table__btn table__btn_edit"></button>
-        <button class="table__btn table__btn_del"></button>
-    </td>
-  </tr>
-    `;
-    return element;
-}
-
-const addToBody = element => {
-    const body = document.querySelector('tbody');
-    body.insertAdjacentHTML('beforeend', element);
-}
-
-const renderGoods = arrayGoods => {
-    const goods = arrayGoods;
-    goods.forEach(goodObject => {
-        const element = createRow(goodObject);
-        addToBody(element);
-    });
-}
-
 const goods = [
     {
         "id": 1,
@@ -92,5 +58,53 @@ const goods = [
         }
     }
 ];
+
+const createRow = goodObject => {
+    const element = `
+  <tr>
+    <td class="table__cell ">${goodObject.id}</td>
+    <td class="table__cell table__cell_left table__cell_name" data-id="${goodObject.id}">
+        <span class="table__cell-id">id: ${goodObject.id}</span>${goodObject.title}</td>
+    <td class="table__cell table__cell_left">${goodObject.category}</td>
+    <td class="table__cell">${goodObject.units}</td>
+    <td class="table__cell">${goodObject.count}</td>
+    <td class="table__cell">${goodObject.price}</td>
+    <td class="table__cell">${goodObject.price * goodObject.count}</td>
+    <td class="table__cell table__cell_btn-wrapper">
+        <button class="table__btn table__btn_pic"></button>
+        <button class="table__btn table__btn_edit"></button>
+        <button class="table__btn table__btn_del"></button>
+    </td>
+  </tr>
+    `;
+    return element;
+}
+
+const addToBody = element => {
+    const body = document.querySelector('tbody');
+    body.insertAdjacentHTML('beforeend', element);
+}
+
+const renderGoods = arrayGoods => {
+    const goods = arrayGoods;
+    goods.forEach(goodObject => {
+        const element = createRow(goodObject);
+        addToBody(element);
+    });
+}
+
+const addButton = document.querySelector('.panel__add-goods');
+addButton.addEventListener('click', () => {
+    const overlay = document.querySelector('.overlay');
+    overlay.classList.add('active');
+});
+
+const closeButton = document.querySelector('.modal__close');
+closeButton.addEventListener('click', () => {
+    const overlay = document.querySelector('.overlay');
+    overlay.classList.remove('active');
+});
+
+
 
 renderGoods(goods);
