@@ -1,6 +1,6 @@
 'use strict';
 
-const goods = [
+let goods = [
     {
         "id": 1,
         "title": "Смартфон Xiaomi 11T 8/128GB",
@@ -105,6 +105,17 @@ closeButton.addEventListener('click', () => {
     overlay.classList.remove('active');
 });
 
+const tbody = document.querySelector('tbody');
+tbody.addEventListener('click', e => {
+    const target = e.target;
+
+    if (target.classList.contains('table__btn_del')) {
+        const parentTr = target.closest('tr');
+        const id = parentTr.firstElementChild.textContent;
+        goods = goods.filter(item => item.id != id);
+        parentTr.remove();
+    }
+});
 
 
 renderGoods(goods);
