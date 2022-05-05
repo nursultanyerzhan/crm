@@ -92,6 +92,14 @@ let goods = [
             computeTotalPriceOfGoods(goods);
             renderGoods(goods);
         }
+
+        if (target.classList.contains('table__btn_pic')) {
+            const top = (screen.height - 600) / 2;
+            const left = (screen.width - 800) / 2;
+            const url = target.getAttribute('data-pic');
+            var newWindow = window.open('about:blank','',`width=800,height=600,top=${top},left=${left}`);
+            newWindow.document.write('<img src="' + url + '" />');
+        }
     });
 
     const modalForm = pageElements.modal__form;
@@ -122,7 +130,7 @@ let goods = [
             let totalPrice = modalForm.count.value * modalForm.price.value;
             if (!Number.isNaN(modalForm.discount_count.value))
                 totalPrice -= modalForm.discount_count.value;
-    
+
             modalForm.total.textContent = totalPrice;
         }
     };
@@ -137,4 +145,3 @@ let goods = [
     }
     window.initCRM = init;
 }
-
