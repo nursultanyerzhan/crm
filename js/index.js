@@ -122,10 +122,47 @@ let goods = [
             let totalPrice = modalForm.count.value * modalForm.price.value;
             if (!Number.isNaN(modalForm.discount_count.value))
                 totalPrice -= modalForm.discount_count.value;
-    
+
             modalForm.total.textContent = totalPrice;
         }
     };
+
+    const div = document.createElement('div');
+    div.className = 'img_wrapper';
+    const modal__label_price = document.querySelector('.modal__label_price');
+    modal__label_price.after(div);
+
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.addEventListener('loadend', () => {
+            resolve(reader.result);
+        });
+
+        reader.addEventListener('error', err => {
+            reject(err);
+        });
+
+        reader.readAsDataURL(file);
+    });
+
+    const imageFile = document.querySelector('#image');
+    imageFile.addEventListener('change', async () => {
+        if (imageFile.files.length > 0) {
+            const imgWrapper = document.querySelector('.img_wrapper');
+            if (imageFile.files[0].size > 1000000) {
+                imgWrapper.textContent = 'Изображение не должно превышать размер 1 Мб';
+            }
+            else {
+                imgWrapper.textContent = '';
+                const img = document.createElement('img');
+                const result = await toBase64(imageFile.files[0]);
+                img.src = result;
+                imgWrapper.append(img);
+            }
+        }
+    });
+
 
     modalForm.count.addEventListener('change', computeCurrentModalTotalPrice);
     modalForm.price.addEventListener('change', computeCurrentModalTotalPrice);
